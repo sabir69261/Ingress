@@ -1,0 +1,19 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: stage-clusterissuer
+  namespace: cert-manager
+spec:
+  acme:
+    email: <example@gmail.com>
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    solvers:
+    - dns01:
+        cloudDNS:
+          project: <project_id>
+          serviceAccountSecretRef:
+            name: <secret_name>
+            key: <example-key.json>
+

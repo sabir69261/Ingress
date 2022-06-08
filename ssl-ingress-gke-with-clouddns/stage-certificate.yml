@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: stage-certificate
+spec:
+  secretName: stage-secret
+  issuerRef:
+    # The issuer created previously
+    name: stage-issuer
+    kind: ClusterIssuer
+  dnsNames:
+  - 'example.com'

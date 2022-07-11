@@ -1,4 +1,5 @@
 # How to Setup ssl Ingress on Kubernetes?
+Before Implementing, Let's have a understanding about some topics like-
 
 ### [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 Kubernetes Ingress is an API object that provides routing rules to manage external users' access to the services in a Kubernetes cluster, typically via HTTPS/HTTP. With Ingress, you can easily set up rules for routing traffic without creating a bunch of Load Balancers or exposing each service on the node.

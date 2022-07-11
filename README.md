@@ -22,4 +22,12 @@ A Secret is an object that contains a small amount of sensitive data such as a p
 
 ## Usage
 ### How to Setup SSL Ingress on GKE using Clouddns?
-``` cd 
+``` cd ssl-ingress-on-gke-with-clouddns
+
+# Create cert-manager 
+kubectl create -f cert-manager.yml 
+
+# [Create a service account in gcp with Clouddns access,, And download the json key in your workspace.](https://cloud.google.com/iam/docs/creating-managing-service-accounts#creating)
+
+# Create a secret with service account key in cert-manager namespace 
+kubectl create secret <secret_name> ```

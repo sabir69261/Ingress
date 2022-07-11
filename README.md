@@ -23,17 +23,14 @@ A Secret is an object that contains a small amount of sensitive data such as a p
 ## Usage
 ### How to Setup SSL Ingress on GKE using Clouddns?
 ```
-1- Change the directory using below command  
+We have to follow some steps like - 
+- Create the Cert-manager in your cluster.
+- Create a service account in gcp with Clouddns access,, And download the json key in your workspace.
+- Create a secret with service account key in cert-manager namespace 
+- Create stage ClusterIssuer 
+- Create stage certificate, Test this.
+- Create prod cluster issuer 
+- Now Create prod certificate 
 
-   `cd ssl-ingress-on-gke-with-clouddns`
-
-2- Create cert-manager 
-
-   `kubectl create -f cert-manager.yml`
-
-3- Create a [service account](https://cloud.google.com/iam/docs/creating-managing-service-accounts#creating) in gcp with Clouddns access,, And download the json key in your workspace.
-
-4- Create a secret with service account key in cert-manager namespace 
-
-   `kubectl create secret <secret_name>`
 ```
+

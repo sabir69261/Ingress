@@ -23,14 +23,43 @@ A Secret is an object that contains a small amount of sensitive data such as a p
 ## Usage
 ### How to Setup SSL Ingress on GKE using Clouddns?
 ```
-We have to follow some steps like - 
-- Create the Cert-manager in your cluster.
-- Create a service account in gcp with Clouddns access,, And download the json key in your workspace.
-- Create a secret with service account key in cert-manager namespace 
-- Create stage ClusterIssuer 
-- Create stage certificate, Test this.
-- Create prod cluster issuer 
-- Now Create prod certificate 
-
+# first Clone this repo in your workspace and the Change the direcrtory
+  cd ssl-ingress-on-gke-with-clouddns
+  
+# Create the Cert-manager in your cluster
+  kubectl create -f cert-manager.yaml 
+  
+# Create a service account in gcp
+   gcloud iam service-accounts create SERVICE_ACCOUNT_NAME \
+    --description="DESCRIPTION" \
+    --display-name="DISPLAY_NAME"
+   
+# Grant Clouddns Admin role to your service account 
+  gcloud projects add-iam-policy-binding PROJECT_ID \
+    --member="serviceAccount:SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com" \
+    --role="roles/dns.admin"
+    
+# Create Service Account key 
+  gcloud iam service-accounts keys create KEY_FILE \
+    --iam-account=SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com
+    
+# Create a secret with service account key in cert-manager namespace 
+  kubectl create secret generic <secret_name> \
+  --from-file=<service-account.json>
+  
+# Create stage ClusterIssuer, Update the Email id, Project Id, Secret Name & Service Account key Name in "stage-clusterissuer.yaml" then run below command
+  kubectl create -f stage-clusterissuer.yaml
+  
+# Create stage certificate, Update Domain name in "stage-certificate.yaml" and then run below command 
+  kubectl create -f stage-certificate.yaml
+  
+# Test this Certificate then Create Prod Certificate
+ 
+# Create Prod ClusterIssuer, Update the Email id, Project Id, Secret Name & Service Account key Name in "prod-clusterissuer.yaml" then run below command
+  kubectl create -f prod-clusterissuer.yaml
+  
+# Create prod certificate, Update Domain name in "prod-certificate.yaml" and then run below command 
+  kubectl create -f prod-certificate.yaml
+  
 ```
 For more information follow this [Blog](https://kosyfrances.com/letsencrypt-dns01/)

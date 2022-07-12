@@ -23,7 +23,7 @@ A Secret is an object that contains a small amount of sensitive data such as a p
 ## Usage
 ### How to Setup SSL Ingress on GKE using Clouddns?
 ```
-# first Clone this repo in your workspace and the Change the direcrtory
+# first Change the direcrtory using
   cd ssl-ingress-on-gke-with-clouddns
   
 # Create the Cert-manager in your cluster
@@ -53,13 +53,21 @@ A Secret is an object that contains a small amount of sensitive data such as a p
 # Create stage certificate, Update Domain name in "stage-certificate.yaml" and then run below command 
   kubectl create -f stage-certificate.yaml
   
-# Test this Certificate then Create Prod Certificate
+# Now keep below line in ingress manifest file and test it 
+  tls:
+  - secretName: stage-cert
+
+# If this is working fine then create Prod ClusterIssuer & Prod Certificate 
  
 # Create Prod ClusterIssuer, Update the Email id, Project Id, Secret Name & Service Account key Name in "prod-clusterissuer.yaml" then run below command
   kubectl create -f prod-clusterissuer.yaml
   
 # Create prod certificate, Update Domain name in "prod-certificate.yaml" and then run below command 
   kubectl create -f prod-certificate.yaml
+  
+# Now Update your secret Name stage to prod, Apply changes and test this, it will work fine.
+  tls:
+  - secretName: prod-cert
   
 ```
 For more information follow this [Blog](https://kosyfrances.com/letsencrypt-dns01/)

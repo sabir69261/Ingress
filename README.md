@@ -44,7 +44,7 @@ A Secret is an object that contains a small amount of sensitive data such as a p
     --iam-account=SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com
     
 # Create a secret with service account key in cert-manager namespace 
-  kubectl create secret generic <secret_name> \
+  kubectl -n cert-manager create secret generic <secret_name> \
   --from-file=<service-account.json>
   
 # Create stage ClusterIssuer, Update the Email id, Project Id, Secret Name & Service Account key Name in "stage-clusterissuer.yaml" then run below command
